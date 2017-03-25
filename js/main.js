@@ -2,7 +2,7 @@
 window.onload = function(){
     var container = d3.select("body") //Get the <body> element from the DOM
         .append("svg") //put new svg in body
-        .attr("width", 920) //assign the width
+        .attr("width", 975) //assign the width
         .attr("height", 500) //assign the height
         .attr("class", "container") //always assign a class (as a block name) for styling and future selection
         .style("background-color", "rgba(0,0,0,0.2)"); //only put a semicolon at the end of the block
@@ -10,34 +10,34 @@ window.onload = function(){
     var innerRect = container.append("rect") //put a new rect in the svg
         .datum(400)
         .attr("width", function(d){
-            return d * 2; //400 * 2 = 800
+            return d * 2.01; //400 * 2 = 800
         })
         .attr("height", function(d){
             return d; //400
         }) //rectangle height
         .attr("class", "innerRect") //class name
-        .attr("x", 50) //position from left on the x (horizontal) axis
-        .attr("y", 50) //position from teh top of the y axis
+        .attr("x", 80) //position from left on the x (horizontal) axis
+        .attr("y", 50) //position from the top of the y axis
         .style("fill", "#FFFFFF"); //fill color
     
     var dataArray = [10, 20, 30, 40, 50];
     
     var cityPop = [
         {
-            city: 'Madison',
-            population: 233209
+            city: 'Berlin',
+            population: 3502000
         },
         {
-            city: 'Milwaukee',
-            population: 594833
+            city: 'Hamburg',
+            population: 1799000
         },
         {
-            city: 'Green Bay',
-            population: 104057
+            city: 'Frankfurt',
+            population: 691518
         },
         {
-            city: 'Superior',
-            population: 27244
+            city: 'Munich',
+            population: 1388000
         }
     ];
     
@@ -54,10 +54,10 @@ window.onload = function(){
     //scale for circles center y coordinates
     var y = d3.scaleLinear()
         .range([450, 50])
-        .domain([0, 700000]);
+        .domain([500000, 4000000]);
     
     var x = d3.scaleLinear() //creates the scale
-        .range([90, 750]) //output min and max
+        .range([120, 750]) //output min and max
         .domain([0, 3]) //input min and max
     
     //color scale generator
@@ -81,7 +81,7 @@ window.onload = function(){
         })
         .attr("r", function(d){
             //calculate the radius based on population value as cirlce area
-            var area = d.population * 0.01;
+            var area = d.population * 0.001;
             return Math.sqrt(area/Math.PI);
         })
         .attr("cx", function(d, i){
@@ -104,16 +104,16 @@ window.onload = function(){
     //create axis g element and add axis
     var axis = container.append("g")
         .attr("class", "axis")
-        .attr("transform", "translate(50, 0)")
+        .attr("transform", "translate(80, 0)")
         .call(yAxis);
     
     //create a text element and add the title
     var title = container.append("text")
         .attr("class", "title")
         .attr("text-anchor", "middle")
-        .attr("x", 450)
+        .attr("x", 500)
         .attr("y", 30)
-        .text("City Populations");
+        .text("German City Populations");
     
     //create cirlce labels
     var labels = container.selectAll(".labels")
@@ -132,7 +132,7 @@ window.onload = function(){
         .attr("class", "nameLine")
         .attr("x", function(d,i){
             //horizonal position to the right of each circle
-            return x(i) + Math.sqrt(d.population * 0.01 / Math.PI) + 5;
+            return x(i) + Math.sqrt(d.population * 0.001 / Math.PI) + 2;
         })
         .text(function(d){
             return d.city;
@@ -145,7 +145,7 @@ window.onload = function(){
     var popLine = labels.append("tspan")
         .attr("class", "popLine")
         .attr("x", function(d,i){
-            return x(i) + Math.sqrt(d.population * 0.01 / Math.PI) + 5;
+            return x(i) + Math.sqrt(d.population * 0.001 / Math.PI) + 2;
         })
         .attr("dy", "15") //vertical offset
         .text(function(d){
